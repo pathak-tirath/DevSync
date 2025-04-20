@@ -1,16 +1,18 @@
 {
-    "name": "backend",
-    "version": "1.0.0",
-    "description": "An app where developers can connect based on their mutual interests",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "keywords": [
-      "nodejs",
-      "typescript"
-    ],
-    "author": "Tirath Pathak",
-    "license": "ISC"
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "An app where developers can connect based on their mutual interests",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript"
+  ],
+  "author": "Tirath Pathak",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
   }
-  
+}
