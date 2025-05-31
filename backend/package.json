@@ -4,7 +4,7 @@
   "description": "An app where developers can connect based on their mutual interests",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/app.ts"
   },
   "keywords": [
     "nodejs",
@@ -13,6 +13,11 @@
   "author": "Tirath Pathak",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29"
   }
 }
