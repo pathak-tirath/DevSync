@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node   ./src/index.ts",
-    "dev": "nodemon   ./src/index.ts"
+    "start": "node src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +13,9 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "nodemon": "^3.1.10",
-    
-    "typescript": "^5.8.3"
+    "mongoose": "^8.15.1"
   },
   "devDependencies": {
-    "@types/express": "^5.0.1",
-    "@types/node": "^22.15.2"
+    "@types/node": "^22.15.29"
   }
 }
