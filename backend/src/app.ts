@@ -5,21 +5,16 @@ import { User } from "./models/user";
 
 const app = express();
 
+app.use(express.json());
+
 app.post("/signup", async (req, res) => {
-  const user = new User({
-    firstName: "john",
-    lastName: "doe",
-    age: 24,
-    email: "john@doe.com",
-    password: "john ",
-    gender: "Male",
-  });
+  const user = new User(req.body);
 
   try {
     await user.save();
     res.send("User added successfully");
   } catch (error) {
-    console.log("Failed to save to the database"  );
+    console.log("Failed to save to the database");
   }
 });
 
