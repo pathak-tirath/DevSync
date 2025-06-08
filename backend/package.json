@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.ts"
+    "start": "tsx src/app.ts",
+    "dev": "tsx --watch src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,8 @@
     "mongoose": "^8.15.1"
   },
   "devDependencies": {
-    "@types/node": "^22.15.29"
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.29",
+    "tsx": "^4.19.4"
   }
 }
