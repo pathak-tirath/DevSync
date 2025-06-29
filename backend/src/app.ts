@@ -2,6 +2,7 @@ import express, { Response } from "express";
 import { connectDB } from "./config/database";
 import "dotenv/config";
 import { User } from "./models/user";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -65,21 +66,34 @@ app.delete("/user/:id", async (req, res) => {
 
 // To update a user
 app.patch("/user/:id", async (req, res) => {
+
+
   try {
     const userId = req.params.id
-    const updateUser = await User.findByIdAndUpdate(userId, req.body, {
+    const userData = req.body
+    const ALLOWED_UPDATES = ["photoUrl", "about", "skills"]
+    const isAllowedUpdate = Object.keys(userData).every(key => ALLOWED_UPDATES.includes(key))
+
+    if (!isAllowedUpdate) {
+      throw new Error("Update is not allowed")
+    }
+    const updateUser = await User.findByIdAndUpdate(userId, userData, {
       runValidators: true
     })
     if (updateUser) {
       res.status(200).json({ message: "User has been updated successfully!" })
     } else {
-      res.status(404).json({ message: "Failed to update the user" });
+      res.status(404).json({ message: "User not found" });
 
     }
 
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({ message: error.message });
+    if (error instanceof mongoose.Error.ValidationError) {
+      res.status(400).json({ message: error.message });
+    } else {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message })
+      }
     }
 
   }
