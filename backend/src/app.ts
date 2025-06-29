@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Response } from "express";
 import { connectDB } from "./config/database";
 import "dotenv/config";
 import { User } from "./models/user";
@@ -13,9 +13,11 @@ app.post("/signup", async (req, res) => {
 
   try {
     await user.save();
-    res.send("User added successfully");
+    res.status(200).json({ message: "User added successfully" });
   } catch (error) {
-    console.log("Failed to save to the database");
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message })
+    }
   }
 });
 
@@ -62,20 +64,24 @@ app.delete("/user/:id", async (req, res) => {
 });
 
 // To update a user
-app.patch("/user/:id", async (req,res) => {
+app.patch("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id
-    const updateUser = await User.findByIdAndUpdate(userId, req.body)
-    if(updateUser){
-      res.status(200).json({message:"User has been updated successfully!"})
-    } else{
+    const updateUser = await User.findByIdAndUpdate(userId, req.body, {
+      runValidators: true
+    })
+    if (updateUser) {
+      res.status(200).json({ message: "User has been updated successfully!" })
+    } else {
       res.status(404).json({ message: "Failed to update the user" });
 
     }
-    
+
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-    
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    }
+
   }
 })
 
