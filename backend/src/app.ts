@@ -73,10 +73,16 @@ app.patch("/user/:id", async (req, res) => {
     const userData = req.body
     const ALLOWED_UPDATES = ["photoUrl", "about", "skills"]
     const isAllowedUpdate = Object.keys(userData).every(key => ALLOWED_UPDATES.includes(key))
-
+    // remove duplicate skills value
+    if (userData.skills.length > 1) {
+      const unique_skills = new Set(userData.skills) //Get only the unique values and removes the duplicated values
+      userData.skills = [...unique_skills] //Replace the skill objects with the latest unique skills array
+    }
     if (!isAllowedUpdate) {
       throw new Error("Update is not allowed")
     }
+
+
     const updateUser = await User.findByIdAndUpdate(userId, userData, {
       runValidators: true
     })
