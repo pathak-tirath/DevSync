@@ -5,10 +5,14 @@ import mongoose from "mongoose";
 import { connectDB } from "./config/database";
 import { User } from "./models/user";
 import { validateSignUp } from "./utils/validation";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
+import { CustomRequest, userAuth } from "./middlewares/auth";
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 // To add a user
 app.post("/signup", async (req, res) => {
@@ -41,25 +45,35 @@ app.post("/signup", async (req, res) => {
 // Sign-in user
 app.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body
-    validateSignUp(req)
+    const { email, password } = req.body;
+    validateSignUp(req);
 
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email });
     if (!user) {
-      throw new Error("User is not found!")
+      throw new Error("User is not found!");
     }
-    const isPasswordMatch = await bcrypt.compare(password, user?.password as string)
+    const isPasswordMatch = await bcrypt.compare(
+      password,
+      user?.password as string
+    );
     if (isPasswordMatch) {
-      res.status(200).json({ message: "User logged in" })
+      // Cookie
+
+      const token = await jwt.sign({ _id: user._id }, "P@thak_0102");
+      res.cookie("token", token);
+      res.status(200).json({ message: "User logged in" });
     } else {
-      res.status(400).json({ message: "Either email or password entered are incorrect. Please try again" })
+      res.status(400).json({
+        message:
+          "Either email or password entered are incorrect. Please try again",
+      });
     }
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({ message: error.message });
     }
   }
-})
+});
 
 // To get a Specific user
 app.get("/user", async (req, res) => {
@@ -86,6 +100,19 @@ app.get("/feed", async (req, res) => {
   }
 });
 
+// To get user's profile
+
+app.get("/profile", userAuth, async (req: CustomRequest, res) => { // Here, it checks the middleware - userAuth, if all good, then proceeds with the below function.
+  try {
+    const getUserProfile = await req.userData;
+    res.status(200).json(getUserProfile);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(401).json({ message: error.message });
+    }
+  }
+});
+
 // To Delete a user
 app.delete("/user/:id", async (req, res) => {
   try {
@@ -109,7 +136,7 @@ app.patch("/user/:id", async (req, res) => {
     const userData = req.body;
     const ALLOWED_UPDATES = ["photoUrl", "about", "skills"];
     const isAllowedUpdate = Object.keys(userData).every((key) =>
-      ALLOWED_UPDATES.includes(key),
+      ALLOWED_UPDATES.includes(key)
     );
     // remove duplicate skills value
     if (userData.skills.length > 1) {
