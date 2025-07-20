@@ -1,0 +1,12 @@
+    const encryptedPassword = await bcrypt.hash(password, 10);
+ -  Here "10" is the salt -- Basically, it is the number of iteration that bcrypt does for encrypting the password. The more the numbers, the stronger the encryption password.
+
+
+ - next() function usage -> https://expressjs.com/en/guide/writing-middleware.html#:~:text=If%20the%20current%20middleware%20function%20does%20not%20end%20the%20request%2Dresponse%20cycle%2C%20it%20must%20call%20next()%20to%20pass%20control%20to%20the%20next%20middleware%20function.%20Otherwise%2C%20the%20request%20will%20be%20left%20hanging.
+
+ - You can assign more than one middlewares. 
+    for example:- app.get("/profile", one,two, async (req: CustomRequest, res) => {...})
+
+    - Just that if you pass a res in any one of them, it will send the response back and terminate there and throw an error "Cannot set headers after they are sent to client"
+
+    
