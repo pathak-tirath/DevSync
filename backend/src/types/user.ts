@@ -10,5 +10,4 @@ export interface IUser {
   skills?: string[];
   getJWT?:() => void;
   isPasswordValid? :(password:string) => void;
-  sayHello?: () => void;
 }

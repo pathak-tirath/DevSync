@@ -87,7 +87,6 @@ app.get("/profile", userAuth, async (req: CustomRequest, res) => { // Here, it c
 app.post("/sendConnectionRequest", userAuth, async (req: CustomRequest, res) => {
   try {
     const user = await req.userData;
-    // const test = await user?.sayHello()
     res.send(`${user && user.firstName} sent you a connection request!`)
   } catch (error) {
     if (error instanceof Error) {

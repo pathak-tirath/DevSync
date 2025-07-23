@@ -80,9 +80,6 @@ userSchema.methods.isPasswordValid = async function (password:string) {
       );
 }
 
-userSchema.methods.sayHello = async function (){
-  return `This is hello from ${this.firstName}`
-}
 
 
 export const User = mongoose.model<IUser>("user", userSchema);
