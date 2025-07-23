@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// To add a user
+//func To add a user
 app.post("/signup", async (req, res) => {
   try {
     // To validate the user's data coming from UI or postman
@@ -40,7 +40,8 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// Sign-in user
+
+//func Sign-in user
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -70,8 +71,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// To get user's profile
-
+//func To get user's profile
 app.get("/profile", userAuth, async (req: CustomRequest, res) => { // Here, it checks the middleware - userAuth, if all good, then proceeds with the below function.
   try {
     const getUserProfile = await req.userData;
@@ -83,7 +83,7 @@ app.get("/profile", userAuth, async (req: CustomRequest, res) => { // Here, it c
   }
 });
 
-// To send a connection request
+//func To send a connection request
 app.post("/sendConnectionRequest", userAuth, async (req: CustomRequest, res) => {
   try {
     const user = await req.userData;
