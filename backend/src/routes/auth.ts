@@ -46,11 +46,13 @@ authRouter.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("User is not found!");
     }
-    const isPasswordMatch = await user && user.isPasswordValid && user.isPasswordValid(password);
+    const isPasswordMatch = await user?.validatePassword?.(password) || false;
+        
+
     if (isPasswordMatch) {
       // Cookie
-      const token = user.getJWT && await user.getJWT()
-      
+      const token = await user?.getJWT!()
+
       res.cookie("token", token, { expires: new Date(Date.now() + 7 * 24 * 3600000) });
       res.status(200).json({ message: "User logged in" });
     } else {
@@ -65,3 +67,11 @@ authRouter.post("/login", async (req, res) => {
     }
   }
 });
+
+
+// func Logout
+authRouter.post("/logout", (req, res) => {
+  res.status(200).cookie("token", null, {
+    expires: new Date(Date.now())
+  }).json({ message: "Logout successfully" })
+})

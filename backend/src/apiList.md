@@ -8,7 +8,7 @@
 # profile
 - GET/profile - view profile
 - PATCH/profile - edit profile 
-- PATCH/forgotPassword
+- PATCH/changePassword
 
 # user
 - GET/feed

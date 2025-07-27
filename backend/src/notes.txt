@@ -10,7 +10,7 @@
     - Just that if you pass a res in any one of them, it will send the response back and terminate there and throw an error "Cannot set headers after they are sent to client"
 
     
-    userSchema.methods.isPasswordValid = async function (password:string) {
+    userSchema.methods.validatePassword = async function (password:string) {
       await bcrypt.compare(
          password,
          this?.password as string
@@ -18,3 +18,6 @@
       }
 
       -- If the methods are like the above ones, which are closely tied to user schema like method to check if the password is valid or not and for assigning a user a JWT token for authentication, so use the custom methods for advantages such as better encapsulation, clean code etc. 
+
+
+      - Here in the userAuth, the server basically verifies the token it receives from the user, matches it, whether it is correct token or not. Additionally, based on _id, from the extracted token, it finds it in the DB and returns the user of the _id

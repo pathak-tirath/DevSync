@@ -73,11 +73,13 @@ userSchema.methods.getJWT = async function () {
 
 
 // To check if the password is valid or not
-userSchema.methods.isPasswordValid = async function (password:string) {
-   await bcrypt.compare(
+userSchema.methods.validatePassword = async function (password:string) {
+   const isPasswordValid =  await bcrypt.compare(
         password,
         this?.password as string
       );
+
+      return isPasswordValid
 }
 
 

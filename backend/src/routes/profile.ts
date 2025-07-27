@@ -1,5 +1,7 @@
 import express from 'express'
+import bcrypt from 'bcrypt'
 import { CustomRequest, userAuth } from '../middlewares/auth';
+import { validateChangePassword, validateEditProfile } from '../utils/validation';
 
 export const profileRouter = express.Router()
 
@@ -16,3 +18,57 @@ profileRouter.get("/profile", userAuth, async (req: CustomRequest, res) => { // 
   }
 });
 
+// func To edit user's profile
+profileRouter.patch("/profile", userAuth, async (req: CustomRequest, res) => {
+  try {
+    if (!validateEditProfile(req)) {
+      res.status(400).json({ message: "Invalid update method call" })
+    }
+    const usersProfile = await req.userData;
+
+    if (usersProfile) {
+      Object.assign(usersProfile, req.body)
+      if (usersProfile.skills) {
+        usersProfile.skills = [...new Set(usersProfile.skills)]
+      }
+    }
+
+    usersProfile && usersProfile.save() // To save to the database
+
+    res.send("Updated successfully")
+
+
+
+
+  } catch (error) {
+    if (error instanceof Error)
+      res.status(401).json({ message: error.message })
+  }
+})
+
+// func To change user's password
+profileRouter.patch("/changePassword", userAuth, async (req: CustomRequest, res) => {
+
+  try {
+    const { password } = req.body
+
+    validateChangePassword(req)
+
+    const userData = req.userData //from the database
+
+    const encryptedNewPassword = await bcrypt.hash(password, 10)
+    if (userData) {
+      userData.password = encryptedNewPassword
+      userData.save()
+
+
+      res.status(200).json({ message: "Password has been updated successfully" })
+    } else {
+      res.status(400).json({ message: "Sorry! Unable to update password" })
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message })
+    }
+  }
+})

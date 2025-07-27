@@ -10,6 +10,7 @@ connectionRequestRouter.post(
   async (req: CustomRequest, res) => {
     try {
       const user = await req.userData;
+      console.log("afterwards")
       res.send(`${user && user.firstName} sent you a connection request!`);
     } catch (error) {
       if (error instanceof Error) {

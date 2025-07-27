@@ -1,4 +1,5 @@
 export interface IUser {
+  save(): unknown;
   firstName: string;
   lastName?: string;
   age?: number;
@@ -9,5 +10,5 @@ export interface IUser {
   about?: string;
   skills?: string[];
   getJWT?:() => void;
-  isPasswordValid? :(password:string) => void;
+  validatePassword? :(password:string) => void;
 }

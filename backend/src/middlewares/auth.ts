@@ -15,8 +15,6 @@ export const userAuth = async (
   try {
     const { token } = req.cookies;
 
-
-
     if (!token) {
       res.status(403).json({ error: "Token Invalid! Please login in" });
       return;
@@ -42,7 +40,8 @@ export const userAuth = async (
       next(); //To call the  middleware function, else request will keep hanging
     }
   } catch (error) {
-    console.log(error)
-    res.status(400).json({ error: "Something went wrong" });
+    if (error instanceof Error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 };
