@@ -5,16 +5,15 @@ export const connectionRequestRouter = express.Router();
 
 //func To send a connection request
 connectionRequestRouter.post(
-  "/sendConnectionRequest",
+  "/send/request/:toUserId",
   userAuth,
   async (req: CustomRequest, res) => {
     try {
-      const user = await req.userData;
-      console.log("afterwards")
-      res.send(`${user && user.firstName} sent you a connection request!`);
+      const user = req.userData;
+      res.send(user)
     } catch (error) {
       if (error instanceof Error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
       }
     }
   }
