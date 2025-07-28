@@ -13,7 +13,7 @@ export const userAuth = async (
   next: NextFunction
 ) => {
   try {
-    const { token } = req.cookies;
+    const { token } = req.cookies; // cookies, automatically set by the browser's headers
 
     if (!token) {
       res.status(403).json({ error: "Token Invalid! Please login in" });
@@ -29,8 +29,8 @@ export const userAuth = async (
     if (typeof extractedMessage === "object" && "_id" in extractedMessage) {
       const { _id } = extractedMessage;
 
-      // Get the user from the DB.  
-      const userData = await User.findById(_id);
+      // Get the user from the DB with the id extracted from the token.  
+      const userData = await User.findById(_id); 
       if (!userData) {
         res.status(404).json({ error: "User is not found!" });
         return;
