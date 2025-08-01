@@ -21,3 +21,19 @@
 
 
       - Here in the userAuth, the server basically verifies the token it receives from the user, matches it, whether it is correct token or not. Additionally, based on _id, from the extracted token, it finds it in the DB and returns the user of the _id
+
+
+
+      Q. Difference b/w Schema, model and document
+      
+      Schema → The blueprint (what the house should look like)
+      Model → The contractor who reads the blueprint and builds actual houses
+      Document → The house built from the model (and based on the schema)
+
+
+      mongoose.model: Understands the schema and knows how to:
+
+      - Create documents (using new keyword like new User(...))
+      - Validate data
+      - Connect to a specific MongoDB collection
+      - Run queries like .find(), .save(), .deleteOne(), etc.

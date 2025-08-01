@@ -16,9 +16,10 @@
 - GET/requests/received
 
 # connectionRequest
-- POST/profile/like
-- POST/profile/pass
+- POST/send/request/like/:id
+- POST/send/request/pass/:id
+
 - POST/request/accept
-- POST/request/reject 
+- POST/request/decline 
 
 

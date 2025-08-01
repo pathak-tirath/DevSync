@@ -8,7 +8,7 @@ import {
 
 export const profileRouter = express.Router();
 
-//func: To get user's profile
+//func: To get user's profile of the logged in user
 profileRouter.get("/profile", userAuth, async (req: CustomRequest, res) => {
   // Here, it checks the middleware - userAuth, if all good, then proceeds with the below function.
   try {

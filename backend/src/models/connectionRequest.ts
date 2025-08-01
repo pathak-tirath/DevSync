@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const allowedStates = {
-  values: ["accepted", "declined", "interested", "pass"],
+  values: ["accept", "decline", "like", "pass"],
   message: "{VALUE} is not allowed for {PATH}",
 };
 

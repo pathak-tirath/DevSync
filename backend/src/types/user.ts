@@ -1,4 +1,7 @@
+import mongoose from "mongoose";
+
 export interface IUser {
+  _id?: mongoose.Types.ObjectId;
   save(): unknown;
   firstName: string;
   lastName?: string;

@@ -17,7 +17,7 @@ authRouter.post("/signup", async (req, res) => {
 
     // Hash the password
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const newUser = {
+    const newUser = { 
       firstName,
       lastName,
       email,
@@ -25,7 +25,7 @@ authRouter.post("/signup", async (req, res) => {
       age,
     };
 
-    const user = new User(newUser);
+    const user = new User(newUser); //creates a new Object or instance
     await user.save();
     res.status(200).json({ message: "User added successfully" });
   } catch (error) {
