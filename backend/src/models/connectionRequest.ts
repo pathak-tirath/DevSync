@@ -7,14 +7,16 @@ const allowedStates = {
   message: "{VALUE} is not allowed for {PATH}",
 };
 
+// ! Check why Schema level validation aren't working or need to add something.
 const connectionRequestSchema = new Schema(
   {
     fromUser: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     toUser: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+
       required: true,
     },
     status: {
@@ -25,7 +27,7 @@ const connectionRequestSchema = new Schema(
   { timestamps: true }
 );
 
-export const connectionRequestModel = model(
+export const connectionRequest = model(
   "connectionRequest",
   connectionRequestSchema
 );
