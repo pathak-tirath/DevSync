@@ -37,3 +37,6 @@
       - Validate data
       - Connect to a specific MongoDB collection
       - Run queries like .find(), .save(), .deleteOne(), etc.
+
+
+      - pre in mongoose are basically pre-middleware or pre-hooks, which are executed before a specific operation. Like pre("save"), executed before the save function is called.
